@@ -9,8 +9,19 @@ import userRouter from './routes/userRoutes.js';
 const app= express()
 await connectCloudinary()
 
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'https://saas-ai-1.vercel.app'
+];
+
+// Add any additional origins from environment variable
+if (process.env.FRONTEND_URL) {
+    allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174'],
+    origin: allowedOrigins,
     credentials: true
 }))
 app.use(express.json())
